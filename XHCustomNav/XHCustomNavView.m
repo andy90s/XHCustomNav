@@ -70,7 +70,9 @@ static void *VorizontalScrollContext = &VorizontalScrollContext;
     self.myTableView.translatesAutoresizingMaskIntoConstraints = NO;
     
 }
-
+/**
+ *  现BUG描述:如果滑动tableView比较快就会造成头像位置不正确
+ */
 
 -(void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary<NSString *,id> *)change context:(void *)context
 {
@@ -113,7 +115,7 @@ static void *VorizontalScrollContext = &VorizontalScrollContext;
         self.headView.blurView.alpha = (50 - (-newOffsetY - TableViewContentInsetH))/50;
         //导航视图颜色
         self.headView.navView.backgroundColor = [[UIColor yellowColor] colorWithAlphaComponent:(newOffsetY + TableViewContentInsetH)/TableViewContentInsetH];
-        if (HeadViewHeight + (-newOffsetY - TableViewContentInsetH) > 0) {
+        if (HeadViewHeight + (-newOffsetY - TableViewContentInsetH) >= 64) {
             //头视图高
             self.headView.masConstraintHeadViewH.mas_offset(HeadViewHeight + (-newOffsetY - TableViewContentInsetH));
         }
